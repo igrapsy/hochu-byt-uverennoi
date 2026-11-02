@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хочу быть уверенной</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  color: #f7ecd9;
+  background: radial-gradient(ellipse at top, #31534b, #101e29 75%);
+}
+main {
+  max-width: 520px;
+  margin: auto;
+  padding: 30px 20px;
+  text-align: center;
+}
+h1 { color: #f3d79b; font-size: 34px; }
+h2 { color: #f3d79b; }
+p { line-height: 1.7; }
+input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #c7a66a;
+  background: #f8efdf;
+  font-size: 17px;
+  margin: 15px 0;
+}
+button {
+  padding: 15px 22px;
+  border: 1px solid #d8b978;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#b99555,#74512e);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+.hidden { display: none; }
+.doors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 25px;
+}
+.door {
+  min-height: 145px;
+  border: 1px solid #d6b878;
+  border-radius: 60px 60px 12px 12px;
+  background: linear-gradient(160deg,#416d60,#172b35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+}
+.door:last-child { grid-column: 1 / 3; }
+.card {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #c8a66b;
+  border-radius: 16px;
+  background: #203b38;
+}
+</style>
+</head>
+<body>
+<main>
+<section id="welcome">
+<h1>Хочу быть уверенной</h1>
+<p>Пять дверей к себе.<br>Одно путешествие к своей уверенности.</p>
+<p>Добро пожаловать в волшебный сад. Здесь тебя ждёт встреча с собой.</p>
+<p>Как тебя зовут?</p>
+<input id="name" placeholder="Введи своё имя">
+<button onclick="startGame()">Начать путешествие</button>
+</section>
+
+<section id="garden" class="hidden">
+<h2 id="greeting"></h2>
+<p>Перед тобой пять волшебных дверей. Выбери ту, к которой тебя тянет сейчас.</p>
+<div class="doors">
+<div class="door" onclick="openDoor(1)">✨</div>
+<div class="door" onclick="openDoor(2)">🌙</div>
+<div class="door" onclick="openDoor(3)">🌿</div>
+<div class="door" onclick="openDoor(4)">💫</div>
+<div class="door" onclick="openDoor(5)">🌟</div>
+</div>
+</section>
+
+<section id="story" class="hidden">
+<div class="card">
+<h2 id="storyTitle"></h2>
+<p id="storyText"></p>
+</div>
+</section>
+</main>
+
+<script>
+let playerName = "";
+
+function startGame() {
+  playerName = document.getElementById("name").value.trim();
+  if (!playerName) {
+    alert("Пожалуйста, введи своё имя");
+    return;
+  }
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("garden").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    playerName + ", добро пожаловать в волшебный сад!";
+}
+
+const stories = {
+1: ["Та, которая забыла о себе",
+   "В глубине сада " + "" + " тебя ждёт золотое дерево. Когда-то оно цвело, но теперь его ветви опустели. Хранительница сада говорит: «Возможно, кто-то слишком долго заботился обо всём вокруг и забыл о собственных корнях»."
+],
+2: ["Та, которая боялась сиять",
+   "Перед тобой башня, в которой спрятан свет. " + "Возможно, пришло время узнать, что мешает тебе показать миру свои способности."
+],
+3: ["Та, которая всем говорила «да»",
+   "Ты подходишь к волшебному мосту. Он открывается только тем, кто умеет выбирать, куда идти, а куда — нет."
+],
+4: ["Та, которая боялась хотеть большего",
+   "Перед тобой сокровищница желаний. Но её двери открываются не золотым ключом, а разрешением себе хотеть."
+],
+5: ["Та, которая всё откладывала на потом",
+   "На лесной поляне стоит старинные часы. Они ждут первого шага той, кто давно мечтает начать."
+]
+};
+
+function openDoor(number) {
+  document.getElementById("garden").classList.add("hidden");
+  document.getElementById("story").classList.remove("hidden");
+  document.getElementById("storyTitle").textContent =
+    stories[number][0];
+  document.getElementById("storyText").textContent =
+    playerName + ", " + stories[number][1];
+}
+</script>
+</body>
+</html>
