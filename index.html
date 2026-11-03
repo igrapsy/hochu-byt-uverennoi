@@ -2,987 +2,412 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#102b22">
 <title>Хочу быть уверенной</title>
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Georgia, serif;
-  color: #fff8e9;
-  background: #102c28;
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Georgia,serif;background:#102b22;color:#fff}
+.screen{
+ display:none;
+ position:fixed;
+ inset:0;
+ width:100%;
+ height:100vh;
+ height:100dvh;
+ overflow-y:auto;
+ overflow-x:hidden;
+ -webkit-overflow-scrolling:touch;
+ padding:24px 16px calc(30px + env(safe-area-inset-bottom));
+ background-color:#17382c;
+ background-image:linear-gradient(180deg,rgba(5,20,15,.30),rgba(5,20,15,.76)),var(--bg);
+ background-size:cover;
+ background-position:center center;
+ background-repeat:no-repeat;
 }
-
-.screen {
-  min-height: 100vh;
-  display: none;
-  text-align: center;
-  padding: 30px 16px;
+.screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.screen.long.active{justify-content:flex-start}
+.panel{
+ width:100%;max-width:680px;margin:auto;
+ padding:28px 22px;
+ border:1px solid rgba(239,207,133,.62);
+ border-radius:22px;
+ background:rgba(9,31,23,.78);
+ box-shadow:0 12px 50px rgba(0,0,0,.38);
+ backdrop-filter:blur(5px);
+ text-align:center;
 }
-
-.screen.active {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+h1,h2{color:#f4d99a;font-weight:normal;line-height:1.25}
+h1{font-size:clamp(32px,8vw,48px);margin:0 0 18px}
+h2{font-size:clamp(25px,6vw,34px);margin:0 0 18px}
+p{font-size:17px;line-height:1.7;margin:13px 0}
+.subtitle{font-size:18px;color:#f4e8cb}
+.tag{color:#f1d38d;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:15px}
+.gold{color:#f4d99a}
+.small{font-size:13px;color:#e5d7b7}
+input{
+ width:100%;padding:16px;margin:18px 0;
+ border-radius:12px;border:1px solid #d8bd7b;
+ background:#fff;font-size:17px;color:#24372c;
 }
-
-h1 {
-  font-size: 31px;
-  font-weight: normal;
-  line-height: 1.3;
-  text-shadow: 0 2px 12px #000;
+button{
+ display:block;width:100%;padding:16px 18px;margin:12px 0;
+ border:1px solid #e5c77e;border-radius:13px;
+ background:linear-gradient(135deg,#d8b66c,#f1dda5);
+ color:#26372b;font-size:17px;font-family:Georgia,serif;
+ cursor:pointer;
 }
-
-p { line-height: 1.75; }
-
-button {
-  font-family: inherit;
-  cursor: pointer;
+button.answer{background:rgba(255,255,255,.13);color:#fff;text-align:left}
+button:active{transform:scale(.99)}
+.door-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;margin-top:20px}
+.door{
+ padding:9px;border:1px solid rgba(239,207,133,.65);
+ border-radius:15px;background:rgba(8,30,22,.7);color:#fff;
+ font-size:14px;
 }
-
-.main-btn {
-  background: linear-gradient(135deg,#f0d69d,#b98b4c);
-  color: #26352b;
-  border: 0;
-  border-radius: 30px;
-  padding: 15px 27px;
-  font-size: 17px;
-  margin-top: 20px;
-  box-shadow: 0 5px 20px #0004;
-}
-
-.main-btn:active { transform: scale(.97); }
-
-input {
-  width: 90%;
-  max-width: 320px;
-  padding: 14px;
-  border-radius: 24px;
-  border: 1px solid #e8c987;
-  background: #fffaf0;
-  font-size: 17px;
-  text-align: center;
-}
-
-#forest {
-  background:
-    linear-gradient(#10251d55,#10251dcc),
-    url("IMG_0978.jpeg") center/cover no-repeat;
-}
-
-#clearing {
-  background:
-    linear-gradient(#10251d33,#10251d99),
-    url("IMG_0980.jpeg") center/cover no-repeat;
-  justify-content: flex-start;
-  padding-top: 25px;
-}
-
-.subtitle { max-width: 500px; }
-
-.doors {
-  width: 100%;
-  max-width: 560px;
-  display: grid;
-  grid-template-columns: repeat(6,1fr);
-  gap: 8px;
-  align-items: end;
-  margin: 25px auto;
-}
-
-.door {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  grid-column: span 2;
-  transition: transform .2s;
-}
-
-.door:nth-child(4) { grid-column: 2 / span 2; }
-.door:nth-child(5) { grid-column: 4 / span 2; }
-
-.door img {
-  width: 100%;
-  height: 190px;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 10px #0009);
-}
-
-.door:active { transform: scale(.95); }
-
-/* СЦЕНЫ ПУТЕШЕСТВИЯ */
-
-#story {
-  justify-content: flex-start;
-  padding: 28px 15px 35px;
-  background-color: #10251d;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  transition: background-image .4s;
-}
-
-#story.scene-path {
-  background-image:
-    linear-gradient(#101d1b55,#101d1be8),
-    url("forest-story.jpg");
-}
-
-#story.scene-garden {
-  background-image:
-    linear-gradient(#101d1b55,#101d1be8),
-    url("golden-garden.jpg");
-}
-
-#story.scene-practice {
-  background-image:
-    linear-gradient(#101d1b55,#101d1be8),
-    url("peaceful-clearing.jpg");
-}
-
-#story.scene-final {
-  background-image:
-    linear-gradient(#101d1b55,#101d1be8),
-    url("golden-tree.png");
-}
-
-#story.scene-premium {
-  background-image:
-    linear-gradient(#101d1b55,#101d1be8),
-    url("premium-castle.jpg");
-}
-
-.story-card {
-  width: 100%;
-  max-width: 540px;
-  padding: 27px 21px;
-  border: 1px solid #d7bd83;
-  border-radius: 24px;
-  background: linear-gradient(145deg,#10251df2,#182d2af5);
-  box-shadow: 0 12px 40px #0008;
-  margin: auto 0;
-}
-
-.story-card h1 {
-  color: #f1d59b;
-  font-size: 28px;
-  line-height: 1.35;
-}
-
-.story-card p {
-  font-size: 16px;
-  line-height: 1.85;
-  text-align: left;
-}
-
-.story-label {
-  color: #e8c987;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-
-.story-options {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-  margin-top: 22px;
-}
-
-.choice-btn {
-  width: 100%;
-  padding: 14px 15px;
-  border-radius: 17px;
-  border: 1px solid #c9aa70;
-  background: #ffffff0d;
-  color: #fff8e9;
-  font-size: 15px;
-  line-height: 1.55;
-  text-align: left;
-}
-
-.choice-btn:active {
-  background: #d7bd8333;
-  transform: scale(.98);
-}
-
-.gold-line {
-  width: 70px;
-  height: 1px;
-  background: #d7bd83;
-  margin: 22px auto;
-}
-
-.practice-note {
-  padding: 16px;
-  border-radius: 16px;
-  background: #ffffff0b;
-  border: 1px solid #ffffff20;
-  text-align: left;
-  line-height: 1.8;
-  margin-top: 18px;
-}
-
-.practice-note p { margin: 8px 0; }
-
-.final-image {
-  width: 100%;
-  max-height: 310px;
-  object-fit: cover;
-  border-radius: 18px;
-  margin: 12px 0 20px;
-  border: 1px solid #d7bd83;
-  box-shadow: 0 5px 25px #0007;
-}
-
-.final-message {
-  color: #f1d59b;
-  font-size: 20px !important;
-  font-style: italic;
-  line-height: 1.7 !important;
-  text-align: center !important;
-}
-
-.tale-text p {
-  margin: 0 0 17px;
-  text-align: left;
-}
-
-.premium-list {
-  text-align: left;
-  line-height: 1.9;
-  padding-left: 22px;
-}
-
-footer {
-  font-size: 12px;
-  opacity: .8;
-  margin-top: 25px;
-  padding-bottom: 5px;
-}
-
-@media(max-width:380px) {
-  .door img { height: 150px; }
-  h1 { font-size: 27px; }
-  .story-card { padding: 22px 16px; }
-  .story-card h1 { font-size: 25px; }
+.door img{width:100%;height:145px;object-fit:contain;display:block}
+.door span{display:block;padding:8px 2px}
+.door:last-child{grid-column:1/-1;width:70%;justify-self:center}
+.story-text{text-align:left}
+.story-text p{margin:0 0 16px}
+.footer{margin-top:22px;font-size:13px;color:#e5d7b7}
+@media(max-width:380px){
+ .screen{padding:16px 12px 26px}
+ .panel{padding:22px 16px}
+ .door img{height:115px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- СТАРТ -->
-
-<section id="forest" class="screen active">
+<section id="forest" class="screen active" style="--bg:url('IMG_0978.jpeg')">
+ <div class="panel">
+  <div class="tag">Сказочное психологическое путешествие</div>
   <h1>Хочу быть уверенной</h1>
-  <p>Пять дверей к себе.<br>Одно путешествие к своей уверенности.</p>
-  <p>В глубине волшебного леса начинается твоя история...</p>
-  <input id="name" placeholder="Как тебя зовут?" maxlength="40">
-  <button class="main-btn" onclick="startJourney()">Начать путешествие</button>
-  <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
+  <p class="subtitle">Пять дверей к себе. Одно путешествие к своей уверенности.</p>
+  <p>Иногда, чтобы изменить свою жизнь, нужно сначала услышать себя. Впереди тебя ждёт путешествие, в котором не нужно быть идеальной. Просто будь собой.</p>
+  <input id="playerName" type="text" placeholder="Как тебя зовут?">
+  <button onclick="startJourney()">Начать путешествие</button>
+  <div class="footer">Шакирова Диана, дипломированный психолог, телесный терапевт</div>
+ </div>
 </section>
 
-<!-- ПЯТЬ ДВЕРЕЙ -->
-
-<section id="clearing" class="screen">
-  <h1>Волшебная поляна</h1>
-  <p class="subtitle">
-    Перед тобой пять дверей. Не ищи правильную.
-    Выбери ту, к которой тебя тянет сейчас.
-  </p>
-
-  <div class="doors">
-    <button class="door" onclick="openDoor(1)">
-      <img src="IMG_0981.png" alt="Первая дверь">
-    </button>
-    <button class="door" onclick="openDoor(2)">
-      <img src="IMG_0982.png" alt="Вторая дверь">
-    </button>
-    <button class="door" onclick="openDoor(3)">
-      <img src="IMG_0984.png" alt="Третья дверь">
-    </button>
-    <button class="door" onclick="openDoor(4)">
-      <img src="IMG_0985.png" alt="Четвёртая дверь">
-    </button>
-    <button class="door" onclick="openDoor(5)">
-      <img src="IMG_0986.png" alt="Пятая дверь">
-    </button>
+<section id="clearing" class="screen long" style="--bg:url('IMG_0980.jpeg')">
+ <div class="panel">
+  <div class="tag">Твоя точка выбора</div>
+  <h2 id="clearingTitle">Перед тобой пять дверей</h2>
+  <p>Каждая дверь ведёт к одной из частей тебя. Не выбирай умом. Посмотри, какая история сейчас откликается сильнее.</p>
+  <div class="door-grid">
+   <button class="door" onclick="openDoor(1)"><img src="IMG_0981.png" alt="Первая дверь"><span>Первая дверь<br>Встреча с собой</span></button>
+   <button class="door" onclick="openDoor(2)"><img src="IMG_0982.png" alt="Вторая дверь"><span>Вторая дверь<br>Разрешение сиять</span></button>
+   <button class="door" onclick="openDoor(3)"><img src="IMG_0984.png" alt="Третья дверь"><span>Третья дверь<br>Мои границы</span></button>
+   <button class="door" onclick="openDoor(4)"><img src="IMG_0985.png" alt="Четвёртая дверь"><span>Четвёртая дверь<br>Мои желания</span></button>
+   <button class="door" onclick="openDoor(5)"><img src="IMG_0986.png" alt="Пятая дверь"><span>Пятая дверь<br>Смелость действовать</span></button>
   </div>
-
-  <p style="font-size:13px;opacity:.8">
-    В этом путешествии ты можешь выбрать одну дверь.
-  </p>
-
-  <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
+  <p class="small">В мини-путешествии ты выбираешь одну дверь. Остальные истории ждут тебя в полной версии.</p>
+ </div>
 </section>
 
-<!-- ПУТЕШЕСТВИЕ -->
+<section id="path" class="screen" style="--bg:url('forest-story.jpg')">
+ <div class="panel">
+  <div class="tag">Твой выбор сделан</div>
+  <h2 id="pathTitle"></h2>
+  <p id="pathText"></p>
+  <p>Сделай спокойный вдох. Здесь можно не торопиться и услышать себя.</p>
+  <button onclick="enterGarden()">Войти в историю</button>
+ </div>
+</section>
 
-<section id="story" class="screen scene-path">
-  <div class="story-card" id="storyContent"></div>
-  <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
+<section id="garden" class="screen long" style="--bg:url('golden-garden.jpg')">
+ <div class="panel">
+  <div class="tag">Твоя история начинается</div>
+  <h2 id="questionTitle"></h2>
+  <p id="questionText"></p>
+  <div id="answers"></div>
+ </div>
+</section>
+
+<section id="reflection" class="screen" style="--bg:url('golden-garden.jpg')">
+ <div class="panel">
+  <div class="tag">Твой внутренний отклик</div>
+  <h2>Остановись и прислушайся</h2>
+  <p id="feedbackText"></p>
+  <p id="insightText" class="gold"></p>
+  <button onclick="showPractice()">Продолжить путешествие</button>
+ </div>
+</section>
+
+<section id="practice" class="screen long" style="--bg:url('peaceful-clearing.jpg')">
+ <div class="panel">
+  <div class="tag">Мягкая телесная практика</div>
+  <h2>Я возвращаюсь к себе</h2>
+  <p>Найди удобное положение. Если хочется, поставь стопы на пол и почувствуй опору под ними.</p>
+  <p>Не нужно специально менять дыхание. Просто заметь, как ты дышишь сейчас.</p>
+  <p>Обрати внимание на плечи, живот, грудь, лицо. Где есть напряжение? Где ощущается спокойствие? Ничего не нужно исправлять.</p>
+  <p>Если тебе комфортно, положи ладонь на грудь или живот.</p>
+  <p class="gold">И тихо спроси себя: «Что сейчас нужно мне?»</p>
+  <p>Не торопись искать правильный ответ. Побудь немного с тем, что чувствуешь. Если какое-то действие неприятно, просто пропусти его.</p>
+  <button onclick="showAction()">Я готова продолжить</button>
+ </div>
+</section>
+
+<section id="action" class="screen long" style="--bg:url('peaceful-clearing.jpg')">
+ <div class="panel">
+  <div class="tag">Маленький шаг к себе</div>
+  <h2>Что ты готова сделать для себя?</h2>
+  <p>Уверенность укрепляется не только мыслями. Она растёт, когда мы начинаем учитывать себя в обычной жизни.</p>
+  <div id="actionOptions"></div>
+ </div>
+</section>
+
+<section id="final" class="screen long" style="--bg:url('golden-tree.png')">
+ <div class="panel">
+  <div class="tag">Твоя личная сказка</div>
+  <h2 id="fairytaleTitle"></h2>
+  <div id="fairytale" class="story-text"></div>
+  <p class="gold">Пусть эта история станет напоминанием: ты можешь быть на своей стороне.</p>
+  <button onclick="showPremium()">Узнать о продолжении</button>
+ </div>
+</section>
+
+<section id="premium" class="screen long" style="--bg:url('premium-castle.jpg')">
+ <div class="panel">
+  <div class="tag">Продолжение путешествия</div>
+  <h2>Впереди ещё четыре двери</h2>
+  <p>Ты уже прошла один путь и прикоснулась к важной части себя.</p>
+  <p>В полной версии тебя ждут все пять путешествий: самоценность, проявленность, личные границы, желания и деньги, смелость действовать.</p>
+  <p>Каждая дверь — отдельная психологическая история, вопросы, телесная практика и персональная сказка.</p>
+  <h2 class="gold">Полная версия — 2 000 ₸</h2>
+  <p>Мини-путешествие — 500 ₸</p>
+  <button onclick="premiumMessage()">Хочу узнать о полной версии</button>
+  <p id="premiumInfo" class="small"></p>
+  <div class="footer">Шакирова Диана, дипломированный психолог, телесный терапевт</div>
+ </div>
 </section>
 
 <script>
-let playerName = "";
-let selectedDoor = 0;
-let selectedAnswer = "";
-let selectedAction = "";
+let playerName="";
+let selectedDoor=1;
+let selectedAnswer=0;
+let selectedAction="";
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, function(char) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[char];
-  });
+const journeys={
+1:{
+ title:"Забытый сад",
+ intro:"За дверью начинается тропинка, ведущая в старый сад. Когда-то здесь цвели удивительные цветы, но теперь дорожки заросли травой, а фонтан молчит. Кажется, сад не умер. Он просто давно ждёт, когда о нём вспомнят.",
+ question:"Если бы сегодня тебе не нужно было заботиться обо всех вокруг, что бы ты выбрала для себя?",
+ answers:["Отдохнуть и наконец выдохнуть","Вспомнить о своих желаниях","Почувствовать заботу и поддержку","Перестать жить в ожидании чужого одобрения"],
+ feedback:[
+ "Возможно, сейчас тебе особенно важно восстановить силы. Отдых — не награда за выполненные обязанности, а естественная потребность.",
+ "Похоже, твои желания долго ждали своей очереди. Но они не исчезли. Возможно, пришло время снова прислушаться к ним.",
+ "Тебе может не хватать ощущения, что о тебе тоже можно позаботиться. Не обязательно всё выдерживать самостоятельно.",
+ "Возможно, ты часто сверяешь свои решения с ожиданиями других. Но у тебя есть право постепенно возвращать себе собственный выбор."
+ ],
+ insight:"Тебе не нужно заслуживать право быть важной для самой себя."
+},
+2:{
+ title:"Долина света",
+ intro:"За дверью раскинулась долина, залитая мягким светом. В её центре стоит высокая башня с большим окном. Ставни закрыты, а за ними мерцает огонёк. Кажется, кто-то давно решил, что лучше не показывать свой свет миру.",
+ question:"Что чаще всего останавливает тебя, когда хочется проявить себя?",
+ answers:["Страх критики и осуждения","Кажется, что я недостаточно хороша","Боюсь внимания и чужих взглядов","Не знаю, с чего начать"],
+ feedback:[
+ "Возможно, чужая оценка занимает слишком много места в твоих решениях. Но мнение другого человека не определяет твою ценность.",
+ "Ты можешь ждать идеального момента или полной готовности. Но право пробовать не нужно заслуживать совершенством.",
+ "Быть заметной бывает непривычно. Можно учиться проявляться постепенно, в своём темпе.",
+ "Иногда желание уже есть, но ему не хватает первого маленького шага. Необязательно сразу видеть весь путь."
+ ],
+ insight:"Тебе не нужно становиться кем-то другим, чтобы позволить себе быть видимой."
+},
+3:{
+ title:"Дом открытых дверей",
+ intro:"За дверью стоит уютный дом. Его окна светятся, но все двери распахнуты настежь. В дом постоянно кто-то входит, просит о помощи и оставляет свои заботы. А хозяйка давно не может найти тихую комнату для себя.",
+ question:"Что тебе сложнее всего, когда кто-то просит тебя о чём-то?",
+ answers:["Отказать и не чувствовать вину","Сказать, что мне что-то не подходит","Попросить учитывать мои желания","Не брать на себя чужую ответственность"],
+ feedback:[
+ "Возможно, отказ для тебя связан с риском кого-то расстроить. Но отказ от просьбы не означает отказ от человека.",
+ "Твои чувства и неудобство тоже имеют значение. Ты можешь говорить о них спокойно и прямо.",
+ "Твои желания не менее важны, чем желания окружающих. Им тоже можно находить место.",
+ "Ты можешь поддерживать другого, не забирая на себя всю его ответственность."
+ ],
+ insight:"Границы не разрушают близость. Они помогают сохранить себя в отношениях."
+},
+4:{
+ title:"Сад желаний",
+ intro:"За дверью находится сад, где на ветвях растут маленькие золотые огоньки. Каждый огонёк — чьё-то желание. Некоторые светятся ярко, а другие почти погасли, словно давно забыты. Но стоит подойти ближе, и даже самый слабый огонёк начинает мерцать.",
+ question:"Что происходит внутри, когда ты позволяешь себе хотеть большего?",
+ answers:["Появляется страх, что это невозможно","Становится неловко хотеть для себя","Боюсь, что не справлюсь с большими возможностями","Я знаю, чего хочу, но откладываю"],
+ feedback:[
+ "Возможно, между желанием и верой в его осуществимость пока есть расстояние. Его можно проходить маленькими шагами.",
+ "Желать большего — не значит быть неблагодарной. Ты можешь ценить то, что имеешь, и хотеть нового.",
+ "Большие перемены могут пугать. Необязательно сразу быть готовой ко всему — можно осваивать новое постепенно.",
+ "Возможно, желание уже созрело, но ему пока не хватает конкретного действия. Начни с того, что доступно сегодня."
+ ],
+ insight:"Твои желания имеют право занимать место в твоей жизни."
+},
+5:{
+ title:"Тропа первых шагов",
+ intro:"За дверью начинается длинная тропа. Вдалеке видна светлая вершина. На пути много указателей, но ни один не говорит, с какого шага начать. Возможно, путь начинается не с большого решения, а с движения.",
+ question:"Что чаще всего мешает тебе перейти от намерения к действию?",
+ answers:["Боюсь ошибиться","Жду подходящего момента","Сомневаюсь в своих силах","Начинаю, но быстро теряю энергию"],
+ feedback:[
+ "Ошибка не отменяет твою ценность и не перечёркивает путь. Иногда опыт появляется только после первой попытки.",
+ "Идеальный момент может так и не наступить. Иногда подходящее время создаётся одним небольшим действием.",
+ "Уверенность не всегда приходит до действия. Иногда она появляется после того, как ты увидела, что смогла.",
+ "Возможно, тебе нужен не рывок, а посильный ритм. Маленькие шаги тоже создают движение."
+ ],
+ insight:"Тебе не нужно пройти весь путь сегодня. Достаточно сделать первый шаг."
 }
-
-function showScreen(id) {
-  document.querySelectorAll(".screen").forEach(s => {
-    s.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
-  window.scrollTo(0,0);
-}
-
-function setScene(scene) {
-  const story = document.getElementById("story");
-  story.className = "screen active " + scene;
-  window.scrollTo(0,0);
-}
-
-function render(html, scene) {
-  document.getElementById("storyContent").innerHTML = html;
-  setScene(scene || "scene-garden");
-}
-
-function startJourney() {
-  const value = document.getElementById("name").value.trim();
-
-  if (!value) {
-    alert("Напиши, пожалуйста, своё имя.");
-    return;
-  }
-
-  playerName = value;
-  showScreen("clearing");
-}
-
-/* ДАННЫЕ ПЯТИ ИСТОРИЙ */
-
-const journeys = {
-  1: {
-    title: "Та, которая забыла о себе",
-    place: "Забытый сад",
-    symbol: "золотое дерево",
-    conflict: "Ты так долго заботилась о других, что могла перестать замечать собственные потребности.",
-    question: "Если бы сегодня тебе не нужно было никого спасать, поддерживать и ни перед кем отчитываться, чего бы тебе хотелось?",
-    answers: [
-      ["rest","🌿 Отдохнуть, выдохнуть и перестать всё контролировать"],
-      ["wishes","✨ Вспомнить о своих желаниях и заняться тем, что нравится мне"],
-      ["love","🤍 Почувствовать заботу, поддержку и внимание к себе"],
-      ["freedom","🦋 Быть собой, не оправдываться и не соответствовать ожиданиям"]
-    ],
-    feedback: {
-      rest: "Возможно, ты привыкла быть в движении и решать множество задач. Отдых мог стать чем-то, что нужно заслужить. Но отдых — не награда за выполненную работу. Это естественная потребность.",
-      wishes: "Когда долго заботишься о других, собственные желания могут стать почти неслышными. Это не значит, что их больше нет. Возможно, им просто давно не давали места.",
-      love: "Ты можешь быть сильной и самостоятельной, но это не отменяет желания получать поддержку. Тебе не обязательно справляться со всем одной.",
-      freedom: "Постоянное стремление соответствовать ожиданиям может отдалять от себя. У тебя есть право выбирать, говорить и жить так, как откликается именно тебе."
-    },
-    questionForTale: {
-      rest: "Она мечтала хотя бы ненадолго остановиться и услышать тишину.",
-      wishes: "Она давно не спрашивала себя, чего хочет её собственное сердце.",
-      love: "Ей хотелось однажды не отдавать тепло, а почувствовать, что кто-то бережно поддерживает и её.",
-      freedom: "Она мечтала расправить ветви и больше не прятать свою настоящую природу."
-    },
-    discovery: "Она поняла, что забота о себе не делает её эгоистичной. Дерево не обязано отдавать все свои плоды, чтобы иметь право расти."
-  },
-
-  2: {
-    title: "Та, которая боялась сиять",
-    place: "Королевство звёзд",
-    symbol: "звезда",
-    conflict: "Возможно, тебе хочется проявляться ярче, но что-то удерживает от того, чтобы быть заметной.",
-    question: "Что чаще всего останавливает тебя, когда хочется показать себя и свои способности?",
-    answers: [
-      ["judgment","🌙 Боюсь, что меня осудят или неправильно поймут"],
-      ["mistake","✨ Боюсь ошибиться и выглядеть недостаточно хорошо"],
-      ["attention","🦋 Мне непривычно быть в центре внимания"],
-      ["permission","🌟 Жду, когда почувствую себя полностью готовой"]
-    ],
-    feedback: {
-      judgment: "Страх чужой оценки может заставлять прятать даже то, чем хочется поделиться. Но мнение другого человека не определяет ценность твоего голоса.",
-      mistake: "Когда хочется сделать всё идеально, первый шаг становится особенно трудным. Но проявленность не требует совершенства. Она начинается с разрешения пробовать.",
-      attention: "Быть заметной — непривычно, если раньше безопаснее было оставаться в стороне. Можно постепенно привыкать к вниманию, не заставляя себя делать резкие шаги.",
-      permission: "Ожидание полной готовности может длиться бесконечно. Иногда уверенность приходит не до действия, а постепенно — в процессе."
-    },
-    questionForTale: {
-      judgment: "Она боялась, что другие звёзды будут смеяться над её светом.",
-      mistake: "Она ждала, когда научится сиять без единой ошибки.",
-      attention: "Ей нравилось светить в тишине, но мысль о том, что её заметят, пугала.",
-      permission: "Она всё ждала особенного знака, который наконец разрешит ей выйти из тени."
-    },
-    discovery: "Она поняла: её свет не обязан быть похожим на чей-то другой. Ей не нужно заслуживать право сиять."
-  },
-
-  3: {
-    title: "Та, которая всем говорила «да»",
-    place: "Королевство двух берегов",
-    symbol: "волшебный мост",
-    conflict: "Возможно, иногда ты соглашаешься, хотя внутри хочется сказать совсем другое.",
-    question: "Что тебе труднее всего, когда нужно обозначить свои границы?",
-    answers: [
-      ["guilt","🤍 Чувствую вину, если отказываю"],
-      ["conflict","🌿 Боюсь обидеть человека или вызвать конфликт"],
-      ["rejection","🌙 Боюсь, что меня перестанут любить или принимать"],
-      ["habit","✨ Привыкла соглашаться автоматически, даже не спрашивая себя"]
-    ],
-    feedback: {
-      guilt: "Отказ может вызывать чувство вины, особенно если ты привыкла учитывать чужие желания. Но отказ от просьбы не означает отказ от человека.",
-      conflict: "Желание сохранить мир понятно. Но отношения, в которых для спокойствия одного человека другой постоянно отказывается от себя, становятся неравными.",
-      rejection: "Страх потерять принятие может заставлять соглашаться даже тогда, когда это неудобно. Но твои границы не делают тебя недостойной любви.",
-      habit: "Иногда согласие появляется раньше, чем успевает прозвучать внутренний ответ. Можно учиться делать паузу и проверять, чего хочешь именно ты."
-    },
-    questionForTale: {
-      guilt: "Каждый раз, когда она хотела сказать «нет», ей казалось, что она совершает что-то плохое.",
-      conflict: "Она боялась, что один отказ разрушит хрупкий мир вокруг неё.",
-      rejection: "Она верила, что её будут любить только тогда, когда она всегда удобна.",
-      habit: "Её губы произносили «да» быстрее, чем сердце успевало ответить."
-    },
-    discovery: "Она поняла, что мост должен соединять два берега, а не заставлять один берег исчезнуть."
-  },
-
-  4: {
-    title: "Та, которая боялась хотеть большего",
-    place: "Хрустальное королевство",
-    symbol: "волшебный ключ",
-    conflict: "Возможно, ты чувствуешь, что способна на большее, но не всегда разрешаешь себе хотеть, просить и принимать.",
-    question: "Что происходит внутри, когда ты представляешь жизнь, в которой у тебя гораздо больше возможностей?",
-    answers: [
-      ["unworthy","💎 Кажется, что я этого недостойна"],
-      ["fear","🌙 Боюсь, что не справлюсь с большими возможностями"],
-      ["shame","🤍 Неловко хотеть больше, чем есть сейчас"],
-      ["uncertainty","✨ Не знаю, чего хочу, но чувствую, что мне тесно"]
-    ],
-    feedback: {
-      unworthy: "Мысль о том, что хорошее нужно заслужить, может ограничивать даже тогда, когда возможности уже рядом. Твоя ценность не определяется количеством достижений.",
-      fear: "Большие желания могут одновременно вдохновлять и пугать. Необязательно знать весь путь. Можно начать с одного посильного шага.",
-      shame: "Иногда желание большего кажется чем-то неправильным. Но стремиться к лучшей жизни, достатку и возможностям — не повод стыдиться.",
-      uncertainty: "Ощущение тесноты может появляться раньше, чем становятся понятны новые желания. Дай себе время исследовать, что именно хочется изменить."
-    },
-    questionForTale: {
-      unworthy: "Она считала, что сокровища предназначены для кого-то другого.",
-      fear: "Она видела открывающиеся двери, но боялась, что за ними окажется слишком много неизвестного.",
-      shame: "Она прятала свои желания, будто мечтать о большем было неприлично.",
-      uncertainty: "Она чувствовала, что старый мир стал ей тесен, но ещё не знала, куда ведёт новый путь."
-    },
-    discovery: "Она поняла, что желание большего — не предательство того, что уже есть. Это возможность услышать себя и выбрать направление."
-  },
-
-  5: {
-    title: "Та, которая всё откладывала на потом",
-    place: "Лес остановившегося времени",
-    symbol: "волшебные часы",
-    conflict: "Возможно, ты давно хочешь перемен, но первый шаг всё время переносится на более подходящий момент.",
-    question: "Что чаще всего мешает тебе начать то, что действительно важно?",
-    answers: [
-      ["perfect","🌿 Жду идеального момента и подходящих условий"],
-      ["fear","🌙 Боюсь, что не получится"],
-      ["overwhelm","✨ Кажется, что слишком много всего нужно сделать"],
-      ["doubt","🤍 Сомневаюсь, действительно ли мне это нужно"]
-    ],
-    feedback: {
-      perfect: "Ожидание идеальных условий может незаметно превращаться в бесконечную отсрочку. Иногда достаточно не идеального, а просто возможного момента.",
-      fear: "Страх неудачи часто появляется рядом с тем, что действительно важно. Можно не требовать от себя гарантированного результата, а попробовать небольшой шаг.",
-      overwhelm: "Когда перед глазами сразу весь путь, он может казаться неподъёмным. Раздели его на маленькие действия. Сегодня не нужно проходить всю дорогу.",
-      doubt: "Сомнение не всегда означает, что желание неправильное. Иногда ему нужно внимание и время, чтобы стать яснее."
-    },
-    questionForTale: {
-      perfect: "Она ждала дня, когда всё вокруг наконец станет идеальным.",
-      fear: "Она боялась сделать первый шаг и обнаружить, что дорога окажется трудной.",
-      overwhelm: "Она смотрела на длинную дорогу и не знала, с какого камешка начать.",
-      doubt: "Она так долго откладывала решение, что уже не могла различить собственное желание и привычку ждать."
-    },
-    discovery: "Она поняла, что путь не открывается тем, кто ждёт идеального момента. Он появляется под ногами, когда человек делает первый посильный шаг."
-  }
 };
 
-/* ВЫБОР ДВЕРИ */
-
-function openDoor(number) {
-  selectedDoor = number;
-  selectedAnswer = "";
-  selectedAction = "";
-
-  const data = journeys[number];
-
-  render(`
-    <div class="story-label">Начало твоего путешествия</div>
-    <h1>${data.title}</h1>
-
-    <p>${escapeHTML(playerName)}, ты сделала свой выбор.</p>
-
-    <p>
-      Дверь медленно закрывается за твоей спиной.
-      Перед тобой появляется узкая тропинка,
-      освещённая маленькими золотыми огнями.
-    </p>
-
-    <p>
-      Ветер касается твоих волос, и где-то впереди
-      звучит тихий голос:
-    </p>
-
-    <p class="final-message">
-      «Не торопись. Это путешествие не требует от тебя
-      быть идеальной. Просто позволь себе идти».
-    </p>
-
-    <button class="main-btn" onclick="enterStory()">
-      Отправиться дальше
-    </button>
-  `, "scene-path");
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ const screen=document.getElementById(id);
+ screen.classList.add("active");
+ screen.scrollTop=0;
+ window.scrollTo(0,0);
 }
 
-/* ВХОД В МИР СКАЗКИ */
-
-function enterStory() {
-  const data = journeys[selectedDoor];
-
-  render(`
-    <div class="story-label">${data.place}</div>
-    <h1>За дверью начинается история</h1>
-
-    <p>
-      Тропинка приводит тебя в удивительное место.
-      Здесь всё кажется немного волшебным:
-      воздух наполнен золотистым светом,
-      листья тихо переговариваются между собой,
-      а время словно замедляет свой бег.
-    </p>
-
-    <p>
-      В центре этого мира находится ${data.symbol}.
-      Именно здесь начинается история,
-      которая сегодня будет рассказана для тебя.
-    </p>
-
-    <p>${escapeHTML(playerName)}, прислушайся к ней.</p>
-
-    <button class="main-btn" onclick="renderQuestion()">
-      Продолжить историю
-    </button>
-  `, "scene-garden");
+function escapeHTML(value){
+ return value.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 
-/* ВОПРОС */
-
-function renderQuestion() {
-  const data = journeys[selectedDoor];
-
-  const options = data.answers.map(item => `
-    <button class="choice-btn" onclick="chooseAnswer('${item[0]}')">
-      ${item[1]}
-    </button>
-  `).join("");
-
-  render(`
-    <div class="story-label">Остановись на мгновение</div>
-    <h1>${data.question}</h1>
-
-    <p>
-      Не пытайся выбрать ответ, который кажется правильным.
-      Прислушайся к себе и отметь то, что ближе именно сейчас.
-    </p>
-
-    <div class="story-options">${options}</div>
-
-    <p style="font-size:13px;opacity:.7;text-align:center">
-      Здесь нет правильного или неправильного ответа.
-    </p>
-  `, "scene-garden");
+function startJourney(){
+ const value=document.getElementById("playerName").value.trim();
+ if(!value){alert("Напиши, пожалуйста, своё имя.");return;}
+ playerName=escapeHTML(value);
+ document.getElementById("clearingTitle").textContent=playerName+", перед тобой пять дверей";
+ showScreen("clearing");
 }
 
-/* ОБРАТНАЯ СВЯЗЬ */
-
-function chooseAnswer(answer) {
-  selectedAnswer = answer;
-
-  const data = journeys[selectedDoor];
-  const answerText = data.questionForTale[answer];
-
-  render(`
-    <div class="story-label">Твоё отражение</div>
-
-    <h1>Что может стоять за твоим ответом</h1>
-
-    <p>${data.feedback[answer]}</p>
-
-    <div class="gold-line"></div>
-
-    <p>
-      ${escapeHTML(playerName)}, твой ответ не определяет тебя
-      целиком и не является оценкой.
-      Это лишь возможность внимательнее посмотреть
-      на то, что происходит внутри тебя сейчас.
-    </p>
-
-    <button class="main-btn" onclick="renderPractice()">
-      Продолжить путешествие
-    </button>
-  `, "scene-garden");
+function openDoor(number){
+ selectedDoor=number;
+ selectedAnswer=0;
+ selectedAction="";
+ const item=journeys[number];
+ document.getElementById("pathTitle").textContent=item.title;
+ document.getElementById("pathText").textContent=item.intro;
+ showScreen("path");
 }
 
-/* ТЕЛЕСНАЯ ПРАКТИКА */
-
-function renderPractice() {
-  render(`
-    <div class="story-label">Остановка в пути</div>
-
-    <h1>Встреча с собой</h1>
-
-    <p>
-      ${escapeHTML(playerName)}, прежде чем идти дальше,
-      давай ненадолго остановимся.
-      Найди положение, в котором тебе удобно находиться.
-    </p>
-
-    <div class="practice-note">
-      <p><strong>1.</strong> Почувствуй опору под ногами. Заметь, как стопы соприкасаются с поверхностью.</p>
-
-      <p><strong>2.</strong> Обрати внимание на дыхание. Не нужно его менять. Просто понаблюдай за ним.</p>
-
-      <p><strong>3.</strong> Заметь, что сейчас происходит в теле. Где есть напряжение? Где ощущается спокойствие?</p>
-
-      <p><strong>4.</strong> Если тебе комфортно, положи ладонь на грудь или живот.</p>
-
-      <p><strong>5.</strong> Мысленно спроси себя: «Что сейчас нужно мне?»</p>
-    </div>
-
-    <p>
-      Не торопись искать ответ. Возможно, он придёт сразу,
-      а возможно, ему понадобится время.
-    </p>
-
-    <p style="font-size:13px;opacity:.75">
-      Если какое-то действие вызывает дискомфорт,
-      просто пропусти его.
-    </p>
-
-    <button class="main-btn" onclick="renderAction()">
-      Я готова продолжить
-    </button>
-  `, "scene-practice");
+function enterGarden(){
+ const item=journeys[selectedDoor];
+ document.getElementById("questionTitle").textContent=item.title;
+ document.getElementById("questionText").textContent=item.question;
+ const box=document.getElementById("answers");
+ box.innerHTML="";
+ item.answers.forEach((answer,index)=>{
+  const b=document.createElement("button");
+  b.className="answer";
+  b.textContent=answer;
+  b.onclick=()=>chooseAnswer(index);
+  box.appendChild(b);
+ });
+ showScreen("garden");
 }
 
-/* МАЛЕНЬКОЕ ДЕЙСТВИЕ */
-
-function renderAction() {
-  const actions = [
-    "🌷 Выделить 15 минут только для себя",
-    "🌿 Сделать один выбор в пользу своих потребностей",
-    "✨ Сделать небольшой шаг к тому, чего давно хочется",
-    "🤍 Попросить о помощи, если она мне нужна",
-    "🦋 Сказать себе честно, чего я хочу"
-  ];
-
-  render(`
-    <div class="story-label">Твой маленький шаг</div>
-
-    <h1>Что ты возьмёшь с собой из этого путешествия?</h1>
-
-    <p>
-      Перемены не всегда начинаются с большого решения.
-      Иногда они начинаются с одного небольшого поступка,
-      который подтверждает: я слышу себя.
-    </p>
-
-    <p>Выбери действие, которое тебе действительно по силам.</p>
-
-    <div class="story-options">
-      ${actions.map((action,index) => `
-        <button class="choice-btn" onclick="finishStory(${index})">
-          ${action}
-        </button>
-      `).join("")}
-    </div>
-  `, "scene-practice");
+function chooseAnswer(index){
+ selectedAnswer=index;
+ const item=journeys[selectedDoor];
+ document.getElementById("feedbackText").textContent=item.feedback[index];
+ document.getElementById("insightText").textContent=item.insight;
+ showScreen("reflection");
 }
 
-/* ПЕРСОНАЛЬНАЯ СКАЗКА */
+function showPractice(){showScreen("practice")}
 
-const actionTexts = [
-  "выделить время только для себя",
-  "сделать выбор в пользу собственных потребностей",
-  "сделать небольшой шаг к своему желанию",
-  "попросить о помощи, если она понадобится",
-  "честно признаться себе в том, чего хочется"
-];
-
-function createFairytale() {
-  const data = journeys[selectedDoor];
-  const answerMeaning = data.questionForTale[selectedAnswer];
-  const discovery = data.discovery;
-  const action = actionTexts[selectedAction];
-
-  const tales = {
-    1: {
-      beginning: "Давным-давно, за семью зелёными холмами, находился сад, который умел слышать человеческие желания. В центре сада росло огромное золотое дерево. Его ветви были такими широкими, что под ними могли укрыться целые деревни. Птицы строили гнёзда в его кроне, путники отдыхали в тени, а звери приходили к его корням за прохладой.",
-      middle: "Но мало кто замечал, что само дерево давно устало. Каждый день оно отдавало свои плоды, укрывало от дождя, защищало от ветра и делилось последними каплями влаги. Оно никогда не спрашивало, достаточно ли у него сил. Ему казалось, что если оно хоть на мгновение перестанет заботиться обо всех, сад исчезнет.",
-      event: "Однажды к дереву прилетела маленькая золотая птица. Она села на самую нижнюю ветку и спросила: «А кто заботится о тебе?» Дерево долго молчало. Оно не помнило, когда в последний раз кто-нибудь задавал ему такой вопрос. Птица принесла маленькое семечко и положила его у корней. «Это семя внимания к себе. Оно прорастёт, если ты позволишь себе принять заботу»."
-    },
-    2: {
-      beginning: "Далеко за серебряными облаками существовало королевство звёзд. Каждая звезда имела свой цвет и собственное сияние. Одни были яркими и смелыми, другие светили тихо, третьи мерцали только тогда, когда небо становилось совсем тёмным. И каждая была нужна этому миру.",
-      middle: "Но одна маленькая звезда давно пряталась за облаком. Когда-то она услышала, что её свет слишком необычный, и с тех пор старалась быть незаметной. Она смотрела на других звёзд и думала, что сначала должна научиться светить правильно, красиво и без ошибок.",
-      event: "Однажды к ней прилетела старая хранительница созвездий. «Почему ты прячешься?» — спросила она. Звезда ответила: «Я боюсь, что мой свет кому-нибудь не понравится». Хранительница улыбнулась: «Небо не просит звёзды быть одинаковыми. Если бы все сияли одним цветом, мы бы никогда не увидели красоты созвездий»."
-    },
-    3: {
-      beginning: "В одном далёком королевстве два берега разделяла широкая река. Через неё был перекинут волшебный мост. Он соединял дома, сады и дороги, помогал людям встречаться и возвращаться друг к другу. Но мост обладал одной особенностью: он становился крепче только тогда, когда оба берега оставались на своих местах.",
-      middle: "Жила в том королевстве путешественница, которая всегда старалась угодить каждому. Если кто-то просил её изменить путь, она сворачивала. Если кто-то хотел пройти первым, она уступала. Если кто-то сердился, она торопилась всё исправить. Постепенно она стала забывать, куда сама собиралась идти.",
-      event: "Однажды мост заговорил с ней: «Ты помогаешь всем переходить реку, но почему сама никогда не выбираешь свой берег?» Путешественница удивилась. Она думала, что хороший мост должен выдерживать всё и никогда не говорить о своих потребностях. Но мост ответил: «Если один берег исчезнет, соединять будет нечего»."
-    },
-    4: {
-      beginning: "За хрустальными горами находилось королевство, где хранились сокровища, о которых люди могли только мечтать. Там были золотые сады, просторные дворцы, книги с тайными знаниями и ключи от дверей, ведущих к новым возможностям. Но сокровища не открывались тем, кто считал себя недостойным.",
-      middle: "В этом королевстве жила путешественница. Она часто проходила мимо закрытых залов и смотрела на их сияние издалека. Ей хотелось узнать, что находится внутри, но каждый раз она говорила себе: «Наверное, это не для меня. Возможно, мне достаточно того, что уже есть».",
-      event: "Однажды хранительница хрустального дворца вручила ей маленький ключ. «Почему именно мне?» — спросила путешественница. «Потому что ты пришла сюда не случайно. Ты имеешь право интересоваться тем, что находится за дверями. Ты можешь хотеть большего и при этом оставаться благодарной за то, что уже имеешь»."
-    },
-    5: {
-      beginning: "В глубине волшебного леса стояли огромные часы. Они не показывали ни утро, ни вечер, ни год. Их стрелки замерли много лет назад. Говорили, что часы однажды остановились, потому что слишком много путешественников ждали идеального момента, чтобы отправиться в путь.",
-      middle: "Среди них была одна женщина, которая давно мечтала изменить свою жизнь. Она собирала карты, читала советы, готовилась и обещала себе начать завтра. Но завтра снова становилось ожиданием. Чем дольше она стояла перед дорогой, тем больше казалось, что первый шаг должен быть особенным.",
-      event: "Однажды маленький лесной хранитель спросил её: «Сколько ещё ты собираешься ждать, чтобы почувствовать себя полностью готовой?» Женщина ответила: «Я боюсь ошибиться». Хранитель кивнул: «Тогда не обещай себе пройти весь путь. Пообещай только сделать один шаг. Дорога не требует, чтобы ты заранее знала каждый поворот»."
-    }
-  };
-
-  const tale = tales[selectedDoor];
-
-  return `
-    <div class="tale-text">
-      <p>
-        <strong>${escapeHTML(playerName)}, однажды, в мире, который существует
-        между сном и явью, началась твоя история...</strong>
-      </p>
-
-      <p>${tale.beginning}</p>
-
-      <p>${tale.middle}</p>
-
-      <p>
-        И вот однажды в этот мир пришла героиня,
-        очень похожая на тебя. Её звали ${escapeHTML(playerName)}.
-        Она оказалась здесь не случайно.
-        Волшебная дорога привела её именно туда,
-        где хранился ответ на вопрос, который давно жил внутри.
-      </p>
-
-      <p>${answerMeaning}</p>
-
-      <p>${tale.event}</p>
-
-      <p>
-        Хранительница или хранитель этого места внимательно посмотрели
-        на героиню и сказали: «Знаешь, иногда мы так долго пытаемся
-        стать удобными для мира, что перестаём замечать собственную
-        жизнь. Но твой путь не должен быть похож на чужой.
-        Ты можешь идти в своём темпе. Ты можешь останавливаться.
-        Ты можешь менять направление».
-      </p>
-
-      <p>
-        Героиня задумалась. Она вспомнила все моменты,
-        когда откладывала себя на потом, когда не решалась
-        произнести важные слова, когда ждала разрешения,
-        чтобы сделать что-то для собственной жизни.
-        И впервые не стала себя за это ругать.
-        Она просто увидела, как много сил уходило на то,
-        чтобы не слышать собственный голос.
-      </p>
-
-      <p>
-        В этот момент ${data.symbol} начал светиться.
-        Свет не ослеплял, не требовал восхищения и не заставлял
-        героиню становиться кем-то другим.
-        Он был спокойным и тёплым, словно напоминал:
-        внутри неё уже есть то, что она так долго искала снаружи.
-      </p>
-
-      <p>
-        Тогда героиня произнесла своё новое обещание:
-        «Я не буду требовать от себя мгновенных перемен.
-        Я начну с малого. Я буду замечать себя,
-        прислушиваться к своим чувствам и выбирать
-        то, что действительно важно для меня».
-      </p>
-
-      <p>${discovery}</p>
-
-      <p>
-        Она посмотрела на дорогу, которая теперь светилась
-        мягким золотым светом. Впереди ещё оставалось много
-        неизвестного. Но теперь это неизвестное не казалось
-        таким пугающим. Ведь ей больше не нужно было
-        ждать, пока кто-то укажет направление.
-      </p>
-
-      <p>
-        Она знала, какой первый шаг хочет сделать:
-        <strong>${action}</strong>.
-        Это было совсем небольшое действие.
-        Но именно оно становилось знаком того,
-        что её собственная история продолжается.
-      </p>
-
-      <p>
-        Когда героиня покидала волшебное место,
-        хранительница тихо сказала ей:
-        «Запомни: тебе не нужно становиться другой,
-        чтобы иметь право на хорошую жизнь.
-        Ты можешь постепенно открывать в себе то,
-        что уже давно ждёт твоего внимания».
-      </p>
-
-      <p>
-        И золотой свет ещё долго сопровождал её.
-        Не потому, что впереди больше не будет трудностей,
-        а потому, что теперь она знала:
-        к себе всегда можно возвращаться.
-      </p>
-
-      <p class="final-message">
-        И если однажды ты снова забудешь об этом,
-        ${escapeHTML(playerName)}, вспомни свою сказку.
-        Твоя дорога начинается с тебя.
-      </p>
-    </div>
-  `;
+function showAction(){
+ const options=[
+ "Выделить 15 минут только для себя",
+ "Не соглашаться сразу на то, чего я не хочу",
+ "Сделать то, что давно откладываю",
+ "Попросить о помощи",
+ "Исполнить одно своё небольшое желание"
+ ];
+ const box=document.getElementById("actionOptions");
+ box.innerHTML="";
+ options.forEach(option=>{
+  const b=document.createElement("button");
+  b.className="answer";
+  b.textContent=option;
+  b.onclick=()=>finishStory(option);
+  box.appendChild(b);
+ });
+ showScreen("action");
 }
 
-/* ЗАВЕРШЕНИЕ И ПОЛНАЯ СКАЗКА */
+const tales={
+1:{
+ opening:`Жила-была ${"{{name}}"} — женщина, которая умела заботиться о других. Она помнила о важных датах, замечала чужое настроение, находила нужные слова и часто становилась той, на кого можно положиться. Если кому-то было трудно, она старалась помочь. Если возникала проблема, искала решение. Если кто-то уставал, поддерживала его. И постепенно привыкла считать, что так и должно быть: сначала все остальные, а потом, если останется время, она сама.`,
+ middle:`Однажды вечером она нашла старую калитку. За ней оказался сад, который словно ждал именно её. В центре сада росло золотое дерево. Его ветви были сильными, но почти пустыми. Под деревом сидела маленькая хранительница сада. «Ты пришла очень вовремя», — сказала она. «Этот сад похож на сердце человека, который долго отдавал тепло, но забывал возвращаться к собственным источникам».`,
+ turn:`Хранительница предложила ей выбрать один огонёк. Женщина посмотрела на четыре маленьких света и призналась: «${"{{answer}}"}». Хранительница не стала спорить и не предложила немедленно всё изменить. Она лишь сказала: «Посмотри, сколько времени ты ждала разрешения отдохнуть, захотеть, попросить или выбрать себя. Но сад не просит у других разрешения цвести».`,
+ ending:`Женщина села у дерева. Впервые за долгое время ей не нужно было никуда спешить. Она заметила прохладный воздух, мягкую землю под ногами и собственное дыхание. Один за другим на ветвях начали появляться золотые листья. Они не возникали по приказу. Они возвращались, когда саду давали внимание. И женщина поняла: забота о себе — не эгоизм и не награда за безупречность. Это способ оставаться живой, чувствующей и настоящей.`
+},
+2:{
+ opening:`Жила-была ${"{{name}}"}, у которой был удивительный дар. Она замечала красоту в мелочах, умела создавать новое, придумывать идеи и видеть возможности там, где другие видели только привычные дороги. Но каждый раз, когда ей хотелось показать миру что-то своё, внутри появлялся осторожный голос: «А вдруг не получится? А вдруг осудят? А вдруг подумают, что ты слишком много о себе возомнила?»`,
+ middle:`Однажды она оказалась в долине, где стояла высокая башня. На самом верху горело окно. Женщина поднялась по винтовой лестнице и встретила там старую мастера света. Та держала в руках маленький фонарь. «Почему ты прячешь свой свет?» — спросила она. Женщина ответила: «${"{{answer}}"}». Мастер кивнула: «Когда-то я тоже думала, что сначала должна стать безупречной. Но свет не становится настоящим оттого, что его одобряют. Он просто есть».`,
+ turn:`Мастер предложила ей открыть ставни. За окном лежала долина, и внизу уже ждали люди, которым нужен был именно её свет — не чужая копия, не идеальный образ, а то, что могла дать только она. Женщина осторожно раздвинула створки. Ветер коснулся её лица. Она почувствовала страх, но рядом с ним появилось и другое чувство — любопытство.`,
+ ending:`В тот вечер она не стала обещать себе, что больше никогда не будет сомневаться. Она решила иначе: не отдавать сомнению право решать за неё. Иногда она будет говорить, иногда показывать свою работу, иногда пробовать новое. Не для того, чтобы всем понравиться, а чтобы не прятать свою жизнь от самой себя. И башня впервые за много лет засияла целиком.`
+},
+3:{
+ opening:`Жила-была ${"{{name}}"}, в доме которой всегда было тепло. Она умела встречать гостей, помогать близким, выслушивать длинные истории и находить силы, когда они были нужны другим. Но однажды она заметила странную вещь: в её доме было много комнат для всех, кроме неё самой. Любой мог войти, попросить, оставить свои заботы. А её собственная дверь давно исчезла среди открытых проходов.`,
+ middle:`Однажды она встретила на пороге старую хранительницу домов. Та вручила ей маленький золотой ключ. «Он открывает комнату, которую ты когда-то отдала другим», — сказала хранительница. Женщина прошла по коридору и нашла небольшую дверь. За ней было тихо. Стояло кресло, на столе лежала книга, а на подоконнике рос цветок. «Но я не привыкла закрывать двери», — прошептала она. «Я боюсь, что кто-то обидится».`,
+ turn:`Хранительница спросила, что ей труднее всего: «${"{{answer}}"}». Потом сказала: «Граница — это не стена, чтобы никого не впускать. Это дверь, у которой есть хозяйка. Ты можешь открывать её, когда хочешь, и закрывать, когда тебе нужен покой». Женщина впервые повернула ключ.`,
+ ending:`Сначала ей было непривычно. Она ждала, что дом опустеет, что кто-то уйдёт навсегда, что её сочтут холодной. Но постепенно оказалось: те, кто уважает её, могут услышать спокойное «сейчас не могу» и остаться рядом. А те, кто привык пользоваться её бесконечной доступностью, должны были научиться встречаться с её настоящими возможностями. Женщина поняла, что её дом стал не менее гостеприимным. Он просто наконец стал и её домом.`
+},
+4:{
+ opening:`Жила-была ${"{{name}}"}, у которой внутри жило много желаний. Она мечтала о новых возможностях, красивых событиях, свободе выбирать и о жизни, в которой не нужно постоянно уменьшать свои потребности. Но иногда ей казалось, что хотеть большего неудобно. Нужно быть скромнее, не просить лишнего, не мечтать слишком смело. И маленькие огоньки её желаний постепенно становились всё тише.`,
+ middle:`Однажды она вошла в сад, где на деревьях вместо плодов росли золотые фонарики. Их было так много, что казалось, сад хранит мечты целого мира. У большого дерева сидела садовница. «Здесь растут желания, которые люди однажды отложили», — сказала она. Женщина призналась: «${"{{answer}}"}». Садовница протянула ей пустую чашу: «Не нужно сразу знать, как исполнить каждое желание. Сначала позволь себе его назвать».`,
+ turn:`Женщина посмотрела на огоньки и выбрала один. Он был небольшим, но светил уверенно. Садовница объяснила: «Желание не делает тебя неблагодарной. Оно показывает, куда тянется твоя жизнь. А путь к нему можно создавать постепенно — через решения, обучение, просьбы, действия и готовность принимать новое».`,
+ ending:`Женщина бережно положила огонёк в чашу. Он не обещал ей лёгкой дороги и не превращался в готовое богатство. Но теперь она могла видеть его и не стыдиться. Она поняла, что имеет право хотеть, планировать, пробовать, менять мнение и принимать поддержку. Когда она вышла из сада, за её спиной зажглись новые фонарики. Не потому, что все желания уже исполнились, а потому, что она перестала запрещать себе мечтать.`
+},
+5:{
+ opening:`Жила-была ${"{{name}}"}, которая давно хотела начать новую главу своей жизни. У неё были идеи, планы и мечты. Иногда она даже чувствовала прилив вдохновения, но затем появлялись сомнения: нужно ещё подготовиться, дождаться подходящего времени, стать увереннее, всё продумать. И так проходили дни. Мечта оставалась рядом, но первый шаг всё откладывался.`,
+ middle:`Однажды она оказалась у подножия горы. На вершине сиял маленький замок. Дорога к нему казалась длинной, и женщина уже хотела повернуть назад. Но у тропы сидел проводник. «Что тебя останавливает?» — спросил он. Она ответила: «${"{{answer}}"}». Проводник улыбнулся: «Ты смотришь на всю гору сразу. Но ни один человек не поднимается на вершину одним движением. Путь складывается из шагов, которые можно сделать сегодня».`,
+ turn:`Он предложил ей выбрать один камешек на тропе и положить его в карман. «Пусть он напоминает тебе: не нужно ждать, пока исчезнет страх. Можно двигаться осторожно, проверяя свои силы и выбирая посильный темп». Женщина посмотрела на вершину. Она всё ещё была высокой. Но теперь перед ней была не бесконечная гора, а первый участок пути.`,
+ ending:`Она сделала шаг. Потом остановилась, чтобы почувствовать опору. Затем сделала ещё один. Не каждый шаг был лёгким, иногда ей хотелось передохнуть, иногда она меняла направление. Но теперь остановка не означала поражение, а ошибка не означала конец пути. Когда она подняла глаза, замок всё ещё сиял вдали. И женщина поняла: смелость — это не отсутствие страха. Это возможность выбирать движение, даже когда уверенность ещё только растёт.`
+}
+};
 
-function finishStory(actionIndex) {
-  selectedAction = actionIndex;
-
-  const data = journeys[selectedDoor];
-
-  render(`
-    <div class="story-label">Твоя история продолжается</div>
-
-    <h1>Золотой свет внутри тебя</h1>
-
-    <img
-      class="final-image"
-      src="golden-tree.png"
-      alt="Волшебное золотое дерево"
-      onerror="this.style.display='none'"
-    >
-
-    <p>
-      ${escapeHTML(playerName)}, сейчас для тебя начинается
-      особенная часть путешествия.
-    </p>
-
-    <p>
-      Впереди — личная сказка, созданная на основе твоего имени,
-      выбранной двери и твоих ответов.
-      Устройся поудобнее и не торопись читать.
-    </p>
-
-    <div class="gold-line"></div>
-
-    ${createFairytale()}
-
-    <button class="main-btn" onclick="showPremium()">
-      Продолжить путешествие
-    </button>
-  `, "scene-final");
+function createFairytale(){
+ const t=tales[selectedDoor];
+ const replace=s=>s.replaceAll("{{name}}",playerName).replaceAll("{{answer}}",journeys[selectedDoor].answers[selectedAnswer]);
+ const answer=journeys[selectedDoor].answers[selectedAnswer];
+ const feedback=journeys[selectedDoor].feedback[selectedAnswer];
+ const action=selectedAction;
+ const universal=[
+  `В этом путешествии ${playerName} встретилась не с чужими правилами, а с собственной правдой. Её ответ был важен не потому, что его нужно было оценить, а потому, что он помог увидеть то, что уже происходило внутри.`,
+  `Она вспомнила, сколько раз говорила себе, что потом отдохнёт, потом попросит, потом начнёт, потом выберет себя. Но жизнь не начиналась в каком-то идеальном будущем. Она происходила здесь — в этом дне, в этом дыхании, в возможности сделать маленький выбор.`,
+  `И тогда она решила: ${action.toLowerCase()}. Это не было обещанием стать другой за одну ночь. Это было бережное соглашение с собой — попробовать учитывать свои чувства и потребности не только в особенные дни, но и в обычной жизни.`,
+  `Когда она покидала волшебное место, за спиной тихо закрылась дверь. Но это не было прощанием. Она могла возвращаться к тому, что узнала о себе, снова и снова. Ей больше не требовалось ждать, пока кто-то заметит её усталость, одобрит её желания или вручит разрешение на перемены.`,
+  `На дороге впереди ещё встречались неизвестность и сомнения. Но теперь у неё появилось новое знание: уверенность не всегда приходит до выбора. Иногда она рождается из маленьких поступков, в которых человек не предаёт себя.`,
+  `А где-то далеко, в самом сердце сказочного мира, зажёгся золотой огонёк. Он был знаком того, что одна встреча с собой уже состоялась. И пусть впереди оставались другие двери, ${playerName} теперь знала: у неё есть право открыть их в своё время.`,
+  `И если однажды она снова забудет о себе, пусть вспомнит эту историю. Не нужно быть бесстрашной, идеальной или удобной для всех. Можно быть живой. Можно чувствовать. Можно просить. Можно выбирать. Можно начинать заново.`,
+  `Потому что главная героиня этой сказки — не та, которая никогда не сомневается. А та, которая постепенно учится оставаться рядом с собой. И это уже настоящее волшебство.`
+ ];
+ return `<p>${replace(t.opening)}</p>
+ <p>${replace(t.middle)}</p>
+ <p>${replace(t.turn)}</p>
+ <p>${feedback}</p>
+ <p>${replace(t.ending)}</p>
+ ${universal.map(p=>`<p>${p}</p>`).join("")}
+ <p class="gold">«Я имею право быть собой. Я имею право выбирать. И моя жизнь тоже важна».</p>`;
 }
 
-/* ПРЕМИУМ */
-
-function showPremium() {
-  const data = journeys[selectedDoor];
-
-  render(`
-    <div class="story-label">За следующей дверью — новые открытия</div>
-
-    <h1>Твоё путешествие может продолжиться</h1>
-
-    <p>
-      ${escapeHTML(playerName)}, сегодня ты открыла одну дверь
-      и прошла свой первый путь к себе.
-    </p>
-
-    <p>
-      Но впереди остаются ещё четыре истории.
-      Каждая из них открывает новую тему,
-      помогает посмотреть на себя с другой стороны
-      и продолжить знакомство с собой.
-    </p>
-
-    <div class="gold-line"></div>
-
-    <h1>Пять дверей. Пять историй. Одно путешествие.</h1>
-
-    <ul class="premium-list">
-      <li>История о контакте с собой и своих потребностях</li>
-      <li>История о проявленности и праве сиять</li>
-      <li>История о личных границах</li>
-      <li>История о желаниях, возможностях и деньгах</li>
-      <li>История о смелости действовать и начинать</li>
-    </ul>
-
-    <p>
-      В полной версии тебя ждут все пять путешествий,
-      психологические вопросы, практики и личные сказки.
-    </p>
-
-    <div class="practice-note">
-      <p><strong>Премиум-путешествие — 2 000 ₸</strong></p>
-      <p>Мини-путешествие — 500 ₸</p>
-      <p>Ты уже прошла одну историю. В полной версии
-      сможешь открыть остальные четыре.</p>
-    </div>
-
-    <button class="main-btn" onclick="showPremiumDetails()">
-      Хочу узнать о полной версии
-    </button>
-
-    <p style="font-size:12px;opacity:.7;text-align:center">
-      Спасибо, что отправилась в это путешествие.
-    </p>
-  `, "scene-premium");
+function finishStory(action){
+ selectedAction=action;
+ document.getElementById("fairytaleTitle").textContent=playerName+" и "+journeys[selectedDoor].title.toLowerCase();
+ document.getElementById("fairytale").innerHTML=createFairytale();
+ showScreen("final");
 }
 
-function showPremiumDetails() {
-  const card = document.getElementById("storyContent");
-
-  const details = document.createElement("div");
-  details.className = "practice-note";
-  details.innerHTML = `
-    <p><strong>Ты можешь продолжить знакомство с собой.</strong></p>
-    <p>
-      Для подключения полной версии и получения доступа
-      ко всем пяти историям понадобится оформить премиум-доступ.
-    </p>
-    <p>
-      Здесь будет размещена ссылка на оплату.
-      После подключения оплаты мы добавим её в эту кнопку.
-    </p>
-  `;
-
-  card.appendChild(details);
-  details.scrollIntoView({behavior:"smooth",block:"center"});
+function showPremium(){showScreen("premium")}
+function premiumMessage(){
+ document.getElementById("premiumInfo").textContent=
+ "Полная версия включает все пять путешествий. Информация об оплате и доступе будет добавлена отдельно.";
 }
 </script>
-
 </body>
 </html>
