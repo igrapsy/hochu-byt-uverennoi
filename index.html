@@ -4,27 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Хочу быть уверенной</title>
+
 <style>
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Georgia, serif;
   color: #fff8e9;
   background: #102c28;
 }
+
 .screen {
   min-height: 100vh;
   display: none;
   text-align: center;
   padding: 35px 18px;
 }
-.screen.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-h1 { font-size: 34px; font-weight: normal; text-shadow: 0 2px 12px #000; }
-p { line-height: 1.6; }
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: normal;
+  text-shadow: 0 2px 12px #000;
+}
+
+p { line-height: 1.7; }
+
 button {
   font-family: inherit;
   cursor: pointer;
 }
+
 .main-btn {
   background: linear-gradient(135deg,#e8c987,#b98b4c);
   color: #26352b;
@@ -34,6 +51,7 @@ button {
   font-size: 18px;
   margin-top: 18px;
 }
+
 input {
   width: 90%;
   max-width: 320px;
@@ -44,14 +62,22 @@ input {
   font-size: 17px;
   text-align: center;
 }
+
 #forest {
-  background: linear-gradient(#10251d55,#10251dcc),url("IMG_0978.jpeg") center/cover no-repeat;
+  background:
+    linear-gradient(#10251d55,#10251dcc),
+    url("IMG_0978.jpeg") center/cover no-repeat;
 }
+
 #clearing {
-  background: linear-gradient(#10251d33,#10251d88),url("IMG_0980.jpeg") center/cover no-repeat;
+  background:
+    linear-gradient(#10251d33,#10251d88),
+    url("IMG_0980.jpeg") center/cover no-repeat;
   justify-content: flex-start;
 }
+
 .subtitle { max-width: 500px; }
+
 .doors {
   width: 100%;
   max-width: 560px;
@@ -61,6 +87,7 @@ input {
   align-items: end;
   margin: 25px auto;
 }
+
 .door {
   background: transparent;
   border: 0;
@@ -68,41 +95,142 @@ input {
   grid-column: span 2;
   transition: transform .2s;
 }
+
 .door:nth-child(4) { grid-column: 2 / span 2; }
 .door:nth-child(5) { grid-column: 4 / span 2; }
+
 .door img {
   width: 100%;
   height: 190px;
   object-fit: contain;
   filter: drop-shadow(0 5px 10px #0009);
 }
+
 .door:active { transform: scale(.95); }
+
+/* Сказочная страница */
+
 #story {
-  background: linear-gradient(145deg,#173c34,#251f3d);
+  background:
+    radial-gradient(ellipse at top, #31594b 0%, transparent 55%),
+    linear-gradient(145deg,#102c28,#211d35);
+  justify-content: flex-start;
+  padding-top: 35px;
 }
+
 .story-card {
-  max-width: 480px;
+  width: 100%;
+  max-width: 500px;
   padding: 28px 22px;
   border: 1px solid #d7bd83;
-  border-radius: 22px;
-  background: #10251dcc;
+  border-radius: 24px;
+  background: linear-gradient(145deg,#10251deF,#182d2aF2);
+  box-shadow: 0 12px 40px #0006;
 }
+
+.story-card h1 {
+  color: #f1d59b;
+  font-size: 29px;
+  line-height: 1.3;
+}
+
+.story-card p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.story-label {
+  color: #e8c987;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.story-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.choice-btn {
+  width: 100%;
+  padding: 15px 17px;
+  border-radius: 18px;
+  border: 1px solid #c9aa70;
+  background: #ffffff0d;
+  color: #fff8e9;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  transition: .2s;
+}
+
+.choice-btn:active {
+  background: #d7bd8333;
+  transform: scale(.98);
+}
+
 .back-btn {
   background: transparent;
   border: 1px solid #e8c987;
   color: #fff8e9;
   border-radius: 25px;
   padding: 12px 22px;
+  margin-top: 22px;
+  font-size: 15px;
+}
+
+.gold-line {
+  width: 70px;
+  height: 1px;
+  background: #d7bd83;
+  margin: 22px auto;
+}
+
+.practice-note {
+  padding: 17px;
+  border-radius: 16px;
+  background: #ffffff0b;
+  border: 1px solid #ffffff20;
+  text-align: left;
+  line-height: 1.8;
   margin-top: 18px;
 }
-footer { font-size: 12px; opacity: .8; margin-top: 28px; }
+
+.final-image {
+  width: 100%;
+  border-radius: 18px;
+  margin: 12px 0 20px;
+  border: 1px solid #d7bd83;
+  box-shadow: 0 5px 25px #0007;
+}
+
+.final-message {
+  color: #f1d59b;
+  font-size: 20px !important;
+  font-style: italic;
+  line-height: 1.7 !important;
+}
+
+footer {
+  font-size: 12px;
+  opacity: .8;
+  margin-top: 28px;
+}
+
 @media(max-width:380px) {
   .door img { height: 150px; }
   h1 { font-size: 29px; }
+  .story-card { padding: 23px 17px; }
 }
 </style>
 </head>
+
 <body>
+
+<!-- СТАРТОВАЯ СТРАНИЦА -->
 
 <section id="forest" class="screen active">
   <h1>Хочу быть уверенной</h1>
@@ -113,36 +241,48 @@ footer { font-size: 12px; opacity: .8; margin-top: 28px; }
   <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
 </section>
 
+<!-- ПОЛЯНА С ПЯТЬЮ ДВЕРЯМИ -->
+
 <section id="clearing" class="screen">
   <h1>Волшебная поляна</h1>
-  <p class="subtitle">Перед тобой пять дверей. Не ищи правильную. Выбери ту, к которой тебя тянет сейчас.</p>
+  <p class="subtitle">
+    Перед тобой пять дверей. Не ищи правильную.
+    Выбери ту, к которой тебя тянет сейчас.
+  </p>
+
   <div class="doors">
-    <button class="door" onclick="openDoor(1)"><img src="IMG_0981.png" alt="Сказочная дверь"></button>
-    <button class="door" onclick="openDoor(2)"><img src="IMG_0982.png" alt="Сказочная дверь"></button>
-    <button class="door" onclick="openDoor(3)"><img src="IMG_0984.png" alt="Сказочная дверь"></button>
-    <button class="door" onclick="openDoor(4)"><img src="IMG_0985.png" alt="Сказочная дверь"></button>
-    <button class="door" onclick="openDoor(5)"><img src="IMG_0986.png" alt="Сказочная дверь"></button>
+    <button class="door" onclick="openDoor(1)">
+      <img src="IMG_0981.png" alt="Сказочная дверь">
+    </button>
+    <button class="door" onclick="openDoor(2)">
+      <img src="IMG_0982.png" alt="Сказочная дверь">
+    </button>
+    <button class="door" onclick="openDoor(3)">
+      <img src="IMG_0984.png" alt="Сказочная дверь">
+    </button>
+    <button class="door" onclick="openDoor(4)">
+      <img src="IMG_0985.png" alt="Сказочная дверь">
+    </button>
+    <button class="door" onclick="openDoor(5)">
+      <img src="IMG_0986.png" alt="Сказочная дверь">
+    </button>
   </div>
+
   <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
 </section>
 
+<!-- СТРАНИЦА ИСТОРИЙ -->
+
 <section id="story" class="screen">
-  <div class="story-card">
-    <h1 id="storyTitle"></h1>
-    <p id="storyText"></p>
-    <button class="back-btn" onclick="showScreen('clearing')">Вернуться на поляну</button>
-  </div>
+  <div class="story-card" id="storyContent"></div>
   <footer>Шакирова Диана, дипломированный психолог, телесный терапевт</footer>
 </section>
 
 <script>
 let playerName = "";
+let selectedAnswer = "";
 
 const stories = {
-  1: {
-    title: "Та, которая забыла о себе",
-    text: "В глубине сада росло золотое дерево. Оно много лет дарило тень и плоды всем вокруг, но однажды заметило, что его собственные корни давно остались без заботы. Возможно, пришло время вспомнить и о себе."
-  },
   2: {
     title: "Та, которая боялась сиять",
     text: "За этой дверью находится королевство, где каждый цветок светится по-своему. Однажды одна маленькая звезда решила спрятать свой свет. Но мир продолжал ждать её сияния."
@@ -169,21 +309,321 @@ function showScreen(id) {
 
 function startJourney() {
   const value = document.getElementById("name").value.trim();
+
   if (!value) {
     alert("Напиши, пожалуйста, своё имя.");
     return;
   }
+
   playerName = value;
   showScreen("clearing");
 }
 
 function openDoor(number) {
+  if (number === 1) {
+    selectedAnswer = "";
+    renderFirstDoor();
+    showScreen("story");
+    return;
+  }
+
   const story = stories[number];
-  document.getElementById("storyTitle").textContent = story.title;
-  document.getElementById("storyText").textContent =
-    playerName + ", " + story.text;
+
+  document.getElementById("storyContent").innerHTML = `
+    <h1>${story.title}</h1>
+    <p>${playerName}, ${story.text}</p>
+    <button class="back-btn" onclick="showScreen('clearing')">
+      Вернуться на поляну
+    </button>
+  `;
+
   showScreen("story");
 }
+
+/* ПЕРВАЯ ДВЕРЬ: ЗАБЫТЫЙ САД */
+
+function renderFirstDoor() {
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Первая дверь · Забытый сад</div>
+
+    <h1>Та, которая забыла о себе</h1>
+
+    <p>
+      ${escapeHTML(playerName)}, за этой дверью находится удивительный сад.
+      Когда-то он был наполнен музыкой, ароматами цветов и солнечным светом.
+    </p>
+
+    <p>
+      В самом центре сада росло золотое дерево.
+      Оно дарило прохладу путникам, укрывало птиц,
+      делилось своими плодами со всеми, кто приходил.
+    </p>
+
+    <p>
+      Но однажды дерево заметило, что его ветви устали,
+      листья стали тускнеть, а корни давно не чувствовали
+      живительной влаги.
+    </p>
+
+    <p>
+      Оно так долго заботилось обо всех вокруг,
+      что почти забыло о себе.
+    </p>
+
+    <div class="gold-line"></div>
+
+    <p>
+      И тогда ветер прошептал ему:
+      «Чтобы продолжать расти, тебе тоже нужны забота,
+      внимание и пространство для жизни».
+    </p>
+
+    <p>
+      Возможно, эта история немного напоминает и твою?
+    </p>
+
+    <button class="main-btn" onclick="renderQuestion()">
+      Продолжить историю
+    </button>
+  `;
+}
+
+/* ВОПРОС И ВАРИАНТЫ ОТВЕТА */
+
+function renderQuestion() {
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Остановись на мгновение</div>
+
+    <h1>А чего хочется тебе?</h1>
+
+    <p>
+      Представь, что сегодня тебе не нужно никому ничего доказывать,
+      никого спасать и ни под кого подстраиваться.
+    </p>
+
+    <p>
+      Что тебе больше всего хочется сделать для себя?
+      Выбери то, что откликается именно сейчас.
+    </p>
+
+    <div class="story-options">
+      <button class="choice-btn" onclick="chooseAnswer('rest')">
+        🌿 Просто отдохнуть, выдохнуть и перестать всё контролировать
+      </button>
+
+      <button class="choice-btn" onclick="chooseAnswer('wishes')">
+        ✨ Вспомнить о своих желаниях и наконец заняться тем, что нравится мне
+      </button>
+
+      <button class="choice-btn" onclick="chooseAnswer('love')">
+        🤍 Почувствовать заботу, поддержку и внимание к себе
+      </button>
+
+      <button class="choice-btn" onclick="chooseAnswer('freedom')">
+        🦋 Быть собой, не оправдываться и не соответствовать ожиданиям
+      </button>
+    </div>
+
+    <p style="font-size:13px;opacity:.7;margin-top:20px">
+      Здесь нет правильного или неправильного ответа.
+    </p>
+  `;
+}
+
+/* ПЕРСОНАЛЬНАЯ ОБРАТНАЯ СВЯЗЬ */
+
+const feedback = {
+  rest: {
+    title: "Тебе можно остановиться",
+    text: "Возможно, ты так привыкла быть в движении и решать множество задач, что отдых стал чем-то, что нужно заслужить. Но отдых — не награда за выполненную работу. Это естественная потребность. Тебе не обязательно сначала всё закончить, чтобы позволить себе выдохнуть."
+  },
+
+  wishes: {
+    title: "Твои желания тоже важны",
+    text: "Иногда, заботясь о других, мы постепенно перестаём замечать собственные желания. Сначала кажется, что ничего особенного не хочется. Но это не значит, что желаний нет. Возможно, им просто давно не давали места. Начни с малого — снова спрашивай себя, чего хочешь именно ты."
+  },
+
+  love: {
+    title: "Тебе тоже нужна забота",
+    text: "Ты можешь быть сильной, самостоятельной и многое уметь. Но это не отменяет твоего желания получать поддержку. Необязательно справляться со всем одной. Забота о себе может начинаться с разрешения принимать помощь и говорить о своих потребностях."
+  },
+
+  freedom: {
+    title: "Тебе можно быть собой",
+    text: "Возможно, ты часто думаешь о том, как твои слова и поступки воспримут другие. Но за постоянным стремлением соответствовать ожиданиям легко потерять контакт с собой. Тебе не нужно быть удобной каждую минуту. У тебя есть право выбирать и оставаться собой."
+  }
+};
+
+function chooseAnswer(answer) {
+  selectedAnswer = answer;
+
+  const item = feedback[answer];
+
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Твоё отражение</div>
+
+    <h1>${item.title}</h1>
+
+    <p>${item.text}</p>
+
+    <div class="gold-line"></div>
+
+    <p>
+      ${escapeHTML(playerName)}, не нужно менять всю свою жизнь прямо сейчас.
+      Иногда достаточно впервые за долгое время обратить внимание на себя.
+    </p>
+
+    <button class="main-btn" onclick="renderPractice()">
+      Перейти к практике
+    </button>
+  `;
+}
+
+/* ТЕЛЕСНАЯ ПРАКТИКА */
+
+function renderPractice() {
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Небольшая встреча с собой</div>
+
+    <h1>Я возвращаюсь к себе</h1>
+
+    <p>
+      ${escapeHTML(playerName)}, давай ненадолго остановимся.
+      Найди место, где тебе удобно находиться.
+    </p>
+
+    <div class="practice-note">
+      <p><strong>1.</strong> Почувствуй опору под ногами. Заметь, как стопы соприкасаются с поверхностью.</p>
+
+      <p><strong>2.</strong> Обрати внимание на своё дыхание. Не нужно его менять. Просто понаблюдай за ним.</p>
+
+      <p><strong>3.</strong> Заметь, что сейчас происходит в теле. Где есть напряжение? Где ощущается спокойствие?</p>
+
+      <p><strong>4.</strong> Если тебе комфортно, положи ладонь на грудь или живот.</p>
+
+      <p><strong>5.</strong> Мысленно спроси себя: «Что сейчас нужно мне?»</p>
+    </div>
+
+    <p>
+      Не торопись искать ответ. Возможно, он придёт сразу,
+      а возможно, ему понадобится время.
+    </p>
+
+    <p style="font-size:14px;opacity:.75">
+      Если какое-то действие вызывает дискомфорт, просто пропусти его.
+    </p>
+
+    <button class="main-btn" onclick="renderAction()">
+      Я готова продолжить
+    </button>
+  `;
+}
+
+/* МАЛЕНЬКИЙ ШАГ */
+
+function renderAction() {
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Твой маленький шаг</div>
+
+    <h1>Как ты позаботишься о себе?</h1>
+
+    <p>
+      Уверенность начинается не только с мыслей.
+      Она постепенно появляется и через наши поступки.
+    </p>
+
+    <p>
+      Выбери одно небольшое действие, которое ты можешь
+      сделать для себя в ближайшее время.
+    </p>
+
+    <div class="story-options">
+      <button class="choice-btn" onclick="finishStory('Выделить 15 минут только для себя.')">
+        🌷 Выделить 15 минут только для себя
+      </button>
+
+      <button class="choice-btn" onclick="finishStory('Не соглашаться сразу на то, чего мне не хочется.')">
+        🌿 Не соглашаться сразу на то, чего мне не хочется
+      </button>
+
+      <button class="choice-btn" onclick="finishStory('Сделать то, что я давно откладывала.')">
+        ✨ Сделать то, что я давно откладывала
+      </button>
+
+      <button class="choice-btn" onclick="finishStory('Попросить о помощи, если она мне нужна.')">
+        🤍 Попросить о помощи, если она мне нужна
+      </button>
+
+      <button class="choice-btn" onclick="finishStory('Исполнить одно маленькое своё желание.')">
+        🦋 Исполнить одно маленькое своё желание
+      </button>
+    </div>
+  `;
+}
+
+/* ФИНАЛЬНАЯ СТРАНИЦА */
+
+function finishStory(action) {
+  document.getElementById("storyContent").innerHTML = `
+    <div class="story-label">Твоя история продолжается</div>
+
+    <h1>Сад снова оживает</h1>
+
+    <img
+      class="final-image"
+      src="golden-tree.png"
+      alt="Волшебное золотое дерево"
+      onerror="this.style.display='none'"
+    >
+
+    <p>
+      ${escapeHTML(playerName)}, золотое дерево больше не ждало,
+      что кто-то придёт и позаботится о нём.
+    </p>
+
+    <p>
+      Оно начало постепенно возвращать внимание к своим корням.
+      И с каждым днём его листья становились всё ярче.
+    </p>
+
+    <div class="gold-line"></div>
+
+    <p class="final-message">
+      «Я тоже важна. Мои желания имеют значение.
+      Мне можно заботиться о себе».
+    </p>
+
+    <div class="practice-note">
+      <p><strong>Твой маленький шаг:</strong></p>
+      <p>${action}</p>
+    </div>
+
+    <p>
+      Не нужно обещать себе изменить всё сразу.
+      Просто сделай этот небольшой шаг.
+      И пусть он станет началом твоего возвращения к себе.
+    </p>
+
+    <button class="main-btn" onclick="showScreen('clearing')">
+      Вернуться к пяти дверям
+    </button>
+  `;
+}
+
+/* ЭКРАНИРОВАНИЕ ИМЕНИ */
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char];
+  });
+}
 </script>
+
 </body>
 </html>
