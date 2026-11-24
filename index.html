@@ -229,6 +229,7 @@ button.answer{text-align:left}
 let playerName='',selectedDoor=1,selectedAnswer=0,selectedAction='',customAnswer='',exerciseDone=false;
 
 const ACCESS_API_URL='https://wfapgmflxojxfbjzlzqy.supabase.co/functions/v1/hochu-byt-uverennoi-access';
+const CREATOR_TELEGRAM_ID = '569576112';
 const TRIBUTE_PREMIUM_URL='https://web.tribute.tg/p/Lgy';
 
 const J={
@@ -389,7 +390,30 @@ return false;
 }
 }
 
-async function openDoor(n){
+async function openDoor(n) {
+  selectedDoor = n;
+
+  const telegramUserId =
+    window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+
+  // Создатель игры всегда имеет полный доступ
+  if (String(telegramUserId) === CREATOR_TELEGRAM_ID) {
+    enterStory();
+    return;
+  }
+
+  // Третья сказка бесплатная для всех
+  if (n !== 3) {
+    const hasAccess = await checkPremiumAccess();
+
+    if (!hasAccess) {
+      showScreen('premium');
+      return;
+    }
+  }
+
+  enterStory();
+}
 if(n!==3){
 const allowed=await checkPremiumAccess();
 if(!allowed){
