@@ -396,9 +396,27 @@ async function openDoor(n) {
   const telegramUserId =
     window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
 
-  // Создатель игры всегда имеет полный доступ
-  if (String(telegramUserId) === CREATOR_TELEGRAM_ID) {
-    enterStory();
+  const isCreator =
+    String(telegramUserId) === CREATOR_TELEGRAM_ID;
+
+  // Создателю доступны все пять сказок
+  if (!isCreator && n !== 3) {
+    const hasAccess = await checkPremiumAccess();
+
+    if (!hasAccess) {
+      showScreen('premium');
+      return;
+    }
+  }
+
+  // Показываем вступление к выбранной сказке
+  const j = J[n];
+
+  document.getElementById('pathTitle').textContent = j.title;
+  document.getElementById('pathText').textContent = j.intro;
+
+  showScreen('path');
+}
     return;
   }
 
