@@ -414,38 +414,8 @@ async function openDoor(n) {
 
   document.getElementById('pathTitle').textContent = j.title;
   document.getElementById('pathText').textContent = j.intro;
-
-  showScreen('path');
-}
-    return;
+ showScreen('path');
   }
-
-  // Третья сказка бесплатная для всех
-  if (n !== 3) {
-    const hasAccess = await checkPremiumAccess();
-
-    if (!hasAccess) {
-      showScreen('premium');
-      return;
-    }
-  }
-
-  enterStory();
-}
-if(n!==3){
-const allowed=await checkPremiumAccess();
-if(!allowed){
-showScreen('premium');
-return;
-}
-}
-selectedDoor=n;
-let j=J[n];
-document.getElementById('pathTitle').textContent=j.title;
-document.getElementById('pathText').textContent=j.intro;
-showScreen('path');
-}
-
 function enterStory(){
 let j=J[selectedDoor];
 document.getElementById('questionTitle').textContent=j.title;
